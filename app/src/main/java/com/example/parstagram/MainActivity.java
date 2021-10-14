@@ -4,13 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.List;
 
@@ -32,7 +36,40 @@ public class MainActivity extends AppCompatActivity {
         ivPostImage = findViewById(R.id.ivPostImage);
         btnSubmit = findViewById(R.id.btnSubmit);
 
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String description = etDescription.getText().toString();
+                if (description.isEmpty()){
+                    Toast.makeText(MainActivity.this, "You must include a description!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                savePost(description,currentUser);
+            }
+        });
+
         queryPost();
+    }
+
+    private  void savePost(String description, ParseUser user){
+        Post post = new Post();
+        post.setDescription(description);
+        post.setUser(user);
+
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null){
+                    Log.e(TAG, "Could not save the post");
+                    Toast.makeText(MainActivity.this,"Couldn't save the post", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                Log.i(TAG,"Successfully made the post");
+                etDescription.setText("");
+            }
+        });
     }
 
     private void queryPost() {
