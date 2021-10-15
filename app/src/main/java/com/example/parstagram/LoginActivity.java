@@ -30,7 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if (ParseUser.getCurrentUser() != null){
-            goMainActivity();
+            goHomePageActivity();
             finish();
         }
 
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Unsuccessful creation of account.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                goMainActivity();
+                goHomePageActivity();
                 Toast.makeText(LoginActivity.this,"Success",Toast.LENGTH_SHORT).show();
             }
         });
@@ -99,15 +99,15 @@ public class LoginActivity extends AppCompatActivity {
                     Log.e(TAG,"Issue with login");
                     return;
                 }
-                goMainActivity();
+                goHomePageActivity();
                 Toast.makeText(LoginActivity.this,"Success",Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void goMainActivity(){
+    private void goHomePageActivity(){
 
-        Intent i = new Intent(this, MainActivity.class);
+        Intent i = new Intent(this, HomePageActivity.class);
         startActivity(i);
         finish();
     }
