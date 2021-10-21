@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.parstagram.fragments.ComposeFragment;
+import com.example.parstagram.fragments.LogoutFragment;
 import com.example.parstagram.fragments.PostsFragment;
 import com.example.parstagram.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -63,8 +64,10 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new ComposeFragment();
                         break;
                     case R.id.action_profile:
-                    default:
                         fragment = new ProfileFragment();
+                        break;
+                    default:
+                        fragment = new LogoutFragment();
                         break;
                 }
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
